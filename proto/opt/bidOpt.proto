@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package edu.usfca.protobuf.opt;
+
+// This defines a log message that "our bidding servers" will create.
+// Each BidLog message contains the original BidRequest and other useful information.
+// Each BidRequest is expected to result in at most one BidLog from our servers (it could be "lossy").
+// Downloaded from https://developers.google.com/authorized-buyers/rtb/downloads/openrtb-proto.txt
+// Version 2.5.0 (Jan 23, 2020)
+
+message BidLogOpt {
+    BidRequestOpt bid_Request_opt = 1;
+
+    ExchangeOpt exchange = 2;
+
+    int64 received_at = 3;
+
+    int64 processed_at = 4;
+
+    BidResultOpt bid_result = 5;
+
+    int32 bid_price = 6;
+}
+
+message BidRequestOpt {
+    App app = 4;
+    DeviceId device = 5;
+
+    message App {
+        string bundle = 8;
+    }
+
+    message DeviceId {
+        Geo geo = 4;
+        string os = 14;
+        string ifa = 20;
+    }
+
+    message Geo {
+        string country = 3;
+        string region = 4;
+    }
+}
+
+enum BidResultOpt {
+    UNKNOWN_RESULT = 0;
+    BID = 1;
+    NO_CANDIDATE = 2;
+    INVALID_REQUEST = 3;
+    OUT_OF_BUDGET = 4;
+}
+
+enum ExchangeOpt {
+    UNKNOWN_EXCHANGE = 0;
+    ADX = 1;
+    MOPUB = 2;
+    UNITY = 3;
+    OPENX = 4;
+    VUNGLE = 5;
+    INMOBI = 6;
+    FYBER = 7;
+    APPLOVIN = 8;
+    ADCOLONY = 9;
+    SMAATO = 10;
+    USF = 21;
+    CS = 22;
+}
